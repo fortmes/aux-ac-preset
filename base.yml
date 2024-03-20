@@ -2,8 +2,8 @@
 defaults:
   lower_underscored_name: "ac_name_num"
   display_name: "AC Name Number"
-  tx_pin: GPIO3
-  rx_pin: GPIO1
+  tx_pin_aux: GPIO3
+  rx_pin_aux: GPIO1
 
 debug:
 
@@ -18,10 +18,10 @@ sensor:
       id: $lower_underscored_name_heap_free
     block:
       name: "Heap Max Block"
-      id: ${lower_underscored_name}_heap_max_block
+      id: $lower_underscored_name_heap_max_block
     loop_time:
       name: "Loop Time"
-      id: ${lower_underscored_name}_loop_time
+      id: $lower_underscored_name_loop_time
   - platform: uptime
     name: Uptime Sensor
 text_sensor:
@@ -35,8 +35,8 @@ text_sensor:
 uart:
   id: ac_uart_bus
   # ATTENTION! Use GPIO4 (D2) and GPIO5 (D1) as the TX and RX for NodeMCU-like boards!
-  tx_pin: ${tx_pin}
-  rx_pin: ${rx_pin}
+  tx_pin: ${tx_pin_aux}
+  rx_pin: ${rx_pin_aux}
   baud_rate: 4800
   data_bits: 8
   parity: EVEN
