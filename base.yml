@@ -15,7 +15,7 @@ sensor:
   - platform: debug
     free:
       name: "Heap Free"
-      id: ${lower_underscored_name}_heap_free
+      id: $lower_underscored_name_heap_free
     block:
       name: "Heap Max Block"
       id: ${lower_underscored_name}_heap_max_block
