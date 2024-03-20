@@ -1,1 +1,126 @@
 
+defaults:
+  lower_underscored_name: "ac_name_num"
+  display_name: "AC Name Number"
+  tx_pin: GPIO3
+  rx_pin: GPIO1
+
+debug:
+
+logger:
+    level: DEBUG
+    baud_rate: 0
+
+sensor:
+  - platform: debug
+    free:
+      name: "Heap Free"
+      id: ${lower_underscored_name}_heap_free
+    block:
+      name: "Heap Max Block"
+      id: ${lower_underscored_name}_heap_max_block
+    loop_time:
+      name: "Loop Time"
+      id: ${lower_underscored_name}_loop_time
+  - platform: uptime
+    name: Uptime Sensor
+text_sensor:
+  - platform: debug
+    device:
+      name: "Device Info"
+    reset_reason:
+      name: "Reset Reason"
+
+# # UART0 configuration for AUX air conditioner communication
+uart:
+  id: ac_uart_bus
+  # ATTENTION! Use GPIO4 (D2) and GPIO5 (D1) as the TX and RX for NodeMCU-like boards!
+  tx_pin: ${tx_pin}
+  rx_pin: ${rx_pin}
+  baud_rate: 4800
+  data_bits: 8
+  parity: EVEN
+  stop_bits: 1
+
+climate:
+  - platform: aux_ac
+    name: ${display_name}
+    id: aux_id
+    uart_id: ac_uart_bus
+    period: 7s
+    display_inverted: false
+    timeout: 300
+    optimistic: true
+    indoor_ambient_temperature:
+      name: AC Indoor Temperature
+      id: ac_indoor_temp
+      accuracy_decimals: 1
+      internal: false
+    outdoor_ambient_temperature:
+      name: AC Outdoor Temperature
+      id: ac_outdoor_temp
+      internal: false
+    compressor_suction_temperature:
+      name: AC Coolant Outbound Temperature
+      id: ac_outbound_temp
+      internal: false
+    indoor_coil_temperature:
+      name: AC Coolant Inbound Temperature
+      id: ac_inbound_temp
+      internal: false
+    compressor_discharge_temperature:
+      name: AC Compressor Temperature
+      id: ac_strange_temp
+      internal: false
+    display_state:
+      name: AC Display State
+      id: ac_display_state
+      internal: false
+    defrost_state:
+      name: AC Defrost State
+      id: ac_defrost_state
+      internal: false
+    inverter_power:
+      name: AC Inverter Power
+      id: ac_inverter_power
+      internal: false
+    inverter_power_limit_value:
+      name: AC Inverter Power Limit Value
+      id: ac_inverter_power_limit_value
+      internal: false
+    inverter_power_limit_state:
+      name: AC Inverter Power Limit State
+      id: ac_inverter_power_limit_state
+      internal: false
+    preset_reporter:
+      name: AC Preset Reporter
+      id: ac_preset_reporter
+      internal: false
+    vlouver_state:
+      name: AC Vertical Louvers State
+      id: ac_vlouver_state
+      internal: false
+    visual:
+      min_temperature: 16
+      max_temperature: 32
+      temperature_step: 1
+    supported_modes:
+      - HEAT_COOL
+      - COOL
+      - HEAT
+      - DRY
+      - FAN_ONLY
+    custom_fan_modes:
+      - MUTE
+      - TURBO
+    supported_presets:
+      - SLEEP
+    custom_presets:
+      - CLEAN
+      - HEALTH
+      - ANTIFUNGUS
+    supported_swing_modes:
+      - VERTICAL
+      - HORIZONTAL
+      - BOTH
+
