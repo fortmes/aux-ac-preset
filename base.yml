@@ -64,7 +64,7 @@ climate:
       name: AC Coolant Outbound Temperature
       id: ac_outbound_temp
       internal: false
-    indoor_temperature:
+    inbound_temperature:
       name: AC Coolant Inbound Temperature
       id: ac_inbound_temp
       internal: false
