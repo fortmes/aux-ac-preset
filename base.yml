@@ -4,25 +4,6 @@ logger:
     level: DEBUG
     baud_rate: 0
 
-sensor:
-  - platform: debug
-    free:
-      name: "Heap Free"
-      id: heap_free
-    block:
-      name: "Heap Max Block"
-      id: heap_max_block
-    loop_time:
-      name: "Loop Time"
-      id: loop_time
-  - platform: uptime
-    name: Uptime Sensor
-text_sensor:
-  - platform: debug
-    device:
-      name: "Device Info"
-    reset_reason:
-      name: "Reset Reason"
 
 # # UART0 configuration for AUX air conditioner communication
 uart:
@@ -115,7 +96,24 @@ sensor:
     update_interval: 30s
     unit_of_measurement: "dBa"
     accuracy_decimals: 0
-
+  - platform: debug
+    free:
+      name: "Heap Free"
+      id: heap_free
+    block:
+      name: "Heap Max Block"
+      id: heap_max_block
+    loop_time:
+      name: "Loop Time"
+      id: loop_time
+  - platform: uptime
+    name: Uptime Sensor
+text_sensor:
+  - platform: debug
+    device:
+      name: "Device Info"
+    reset_reason:
+      name: "Reset Reason"
 
 switch:
   - platform: template
