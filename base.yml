@@ -52,43 +52,43 @@ climate:
     optimistic: true
     indoor_temperature:
       name: !lambda 'return id(upper_devicename) + " Indoor Temperature";'
-      id: !lambda 'return id(devicename) + "_indoor_temp";'
+      id: ac_indoor_temp
       internal: false
     display_state:
       name: ${upper_devicename} Display State
-      id: ${devicename}_display_state
+      id: ac_display_state
       internal: false
     outdoor_temperature:
       name: ${upper_devicename} Outdoor Temperature
-      id: ${devicename}_outdoor_temp
+      id: ac_outdoor_temp
       internal: false
     outbound_temperature:
       name: ${upper_devicename} Coolant Outbound Temperature
-      id: ${devicename}_outbound_temp
+      id: ac_outbound_temp
       internal: false
     inbound_temperature:
       name: ${upper_devicename} Coolant Inbound Temperature
-      id: ${devicename}_inbound_temp
+      id: ac_inbound_temp
       internal: false
     compressor_temperature:
       name: ${upper_devicename} Compressor Temperature
-      id: ${devicename}_strange_temp
+      id: ac_strange_temp
       internal: false
     defrost_state:
       name: ${upper_devicename} Defrost State
-      id: ${devicename}_defrost_state
+      id: ac_defrost_state
       internal: false
     inverter_power:
       name: ${upper_devicename} Invertor Power
-      id: ${devicename}_inverter_power
+      id: ac_inverter_power
       internal: false
     preset_reporter:
       name: ${upper_devicename} Preset Reporter
-      id: ${devicename}_preset_reporter
+      id: ac_preset_reporter
       internal: false
     vlouver_state:
       name: ${upper_devicename} VLouvers State
-      id: ${devicename}_vlouver_state
+      id: ac_vlouver_state
       internal: false
     visual:
       min_temperature: 16
