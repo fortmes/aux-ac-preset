@@ -51,8 +51,8 @@ climate:
     display_inverted: true
     optimistic: true
     indoor_temperature:
-      name: ${upper_devicename} Indoor Temperature
-      id: ${devicename}_indoor_temp
+      name: !lambda 'return id(upper_devicename) + " Indoor Temperature";'
+      id: !lambda 'return id(devicename) + "_indoor_temp";'
       internal: false
     display_state:
       name: ${upper_devicename} Display State
