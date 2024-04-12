@@ -51,7 +51,7 @@ climate:
     display_inverted: true
     optimistic: true
     indoor_temperature:
-      name: !lambda 'return id(upper_devicename) + " Indoor Temperature";'
+      name: ${upper_devicename} Indoor Temperature
       id: ac_indoor_temp
       internal: false
     display_state:
@@ -185,7 +185,7 @@ button:
 number:
   - platform: template
     name: ${upper_devicename} Vertical Louvers
-    id: ${devicename}_vlouver
+    id: ac_vlouver
     icon: "mdi:circle-small"
     mode: "slider"
     min_value: 0
@@ -202,7 +202,7 @@ number:
 
   - platform: template
     name: ${upper_devicename} Power Limit
-    id: ${devicename}_power_limit
+    id: ac_power_limit
     icon: "mdi:battery-unknown"
     mode: "slider"
     min_value: 30
