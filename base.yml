@@ -41,69 +41,59 @@ uart:
   data_bits: 8
   parity: EVEN
   stop_bits: 1
-
 climate:
   - platform: aux_ac
-    name: ${display_name}
+    name: ${upper_devicename}
     id: aux_id
     uart_id: ac_uart_bus
     period: 7s
-    display_inverted: false
-    timeout: 300
+    show_action: true
+    display_inverted: true
     optimistic: true
     indoor_temperature:
-      name: AC Indoor Temperature
-      id: ac_indoor_temp
-      accuracy_decimals: 1
-      internal: false
-    outdoor_temperature:
-      name: AC Outdoor Temperature
-      id: ac_outdoor_temp
-      internal: false
-    compressor_temperature:
-      name: AC Coolant Outbound Temperature
-      id: ac_outbound_temp
-      internal: false
-    inbound_temperature:
-      name: AC Coolant Inbound Temperature
-      id: ac_inbound_temp
-      internal: false
-    compressor_temperature:
-      name: AC Compressor Temperature
-      id: ac_strange_temp
+      name: ${upper_devicename} Indoor Temperature
+      id: ${devicename}_indoor_temp
       internal: false
     display_state:
-      name: AC Display State
-      id: ac_display_state
+      name: ${upper_devicename} Display State
+      id: ${devicename}_display_state
+      internal: false
+    outdoor_temperature:
+      name: ${upper_devicename} Outdoor Temperature
+      id: ${devicename}_outdoor_temp
+      internal: false
+    outbound_temperature:
+      name: ${upper_devicename} Coolant Outbound Temperature
+      id: ${devicename}_outbound_temp
+      internal: false
+    inbound_temperature:
+      name: ${upper_devicename} Coolant Inbound Temperature
+      id: ${devicename}_inbound_temp
+      internal: false
+    compressor_temperature:
+      name: ${upper_devicename} Compressor Temperature
+      id: ${devicename}_strange_temp
       internal: false
     defrost_state:
-      name: AC Defrost State
-      id: ac_defrost_state
+      name: ${upper_devicename} Defrost State
+      id: ${devicename}_defrost_state
       internal: false
     inverter_power:
-      name: AC Inverter Power
-      id: ac_inverter_power
-      internal: false
-    inverter_power_limit_value:
-      name: AC Inverter Power Limit Value
-      id: ac_inverter_power_limit_value
-      internal: false
-    inverter_power_limit_state:
-      name: AC Inverter Power Limit State
-      id: ac_inverter_power_limit_state
+      name: ${upper_devicename} Invertor Power
+      id: ${devicename}_inverter_power
       internal: false
     preset_reporter:
-      name: AC Preset Reporter
-      id: ac_preset_reporter
+      name: ${upper_devicename} Preset Reporter
+      id: ${devicename}_preset_reporter
       internal: false
     vlouver_state:
-      name: AC Vertical Louvers State
-      id: ac_vlouver_state
+      name: ${upper_devicename} VLouvers State
+      id: ${devicename}_vlouver_state
       internal: false
     visual:
       min_temperature: 16
       max_temperature: 32
-      temperature_step: 1
+      temperature_step: 0.5
     supported_modes:
       - HEAT_COOL
       - COOL
@@ -124,3 +114,100 @@ climate:
       - HORIZONTAL
       - BOTH
 
+
+sensor:
+  # just wifi signal strength for debug purpose only
+  - platform: wifi_signal
+    name: ${upper_devicename} WiFi Signal
+    update_interval: 30s
+    unit_of_measurement: "dBa"
+    accuracy_decimals: 0
+
+
+switch:
+  - platform: template
+    name: ${upper_devicename} Display
+    lambda: |-
+      if (id(${devicename}_display_state).state) {
+        return true;
+      } else {
+        return false;
+      }
+    turn_on_action:
+      - aux_ac.display_on: aux_id
+    turn_off_action:
+      - aux_ac.display_off: aux_id
+
+button:
+  - platform: template
+    name: ${upper_devicename} VLouver Stop
+    icon: "mdi:circle-small"
+    on_press:
+      - aux_ac.vlouver_stop: aux_id
+    
+  - platform: template
+    name: ${upper_devicename} VLouver Swing
+    icon: "mdi:pan-vertical"
+    on_press:
+      - aux_ac.vlouver_swing: aux_id
+    
+  - platform: template
+    name: ${upper_devicename} VLouver Top
+    icon: "mdi:pan-up"
+    on_press:
+      - aux_ac.vlouver_top: aux_id
+    
+  - platform: template
+    name: ${upper_devicename} VLouver Middle Above
+    icon: "mdi:pan-top-left"
+    on_press:
+      - aux_ac.vlouver_middle_above: aux_id
+    
+  - platform: template
+    name: ${upper_devicename} VLouver Middle
+    icon: "mdi:pan-left"
+    on_press:
+      - aux_ac.vlouver_middle: aux_id
+    
+  - platform: template
+    name: ${upper_devicename} VLouver Middle Below
+    icon: "mdi:pan-bottom-left"
+    on_press:
+      - aux_ac.vlouver_middle_below: aux_id
+    
+  - platform: template
+    name: ${upper_devicename} VLouver Bottom
+    icon: "mdi:pan-down"
+    on_press:
+      - aux_ac.vlouver_bottom: aux_id
+
+
+number:
+  - platform: template
+    name: ${upper_devicename} Vertical Louvers
+    id: ${devicename}_vlouver
+    icon: "mdi:circle-small"
+    mode: "slider"
+    min_value: 0
+    max_value: 6
+    step: 1
+    update_interval: 2s
+    lambda: |-
+      return id(${devicename}_vlouver_state).state;
+    set_action:
+      then:
+        - aux_ac.vlouver_set:
+            id: aux_id
+            position: !lambda "return x;"
+
+  - platform: template
+    name: ${upper_devicename} Power Limit
+    id: ${devicename}_power_limit
+    icon: "mdi:battery-unknown"
+    mode: "slider"
+    min_value: 30
+    max_value: 100
+    step: 1
+    set_action:
+      then:
+        - lambda: !lambda "id(aux_id).powerLimitationOnSequence( x );"
