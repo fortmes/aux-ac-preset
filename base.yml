@@ -35,8 +35,8 @@ logger:
 uart:
   id: ac_uart_bus
   # ATTENTION! Use GPIO4 (D2) and GPIO5 (D1) as the TX and RX for NodeMCU-like boards!
-  tx_pin: $tx_pin_aux
-  rx_pin: $rx_pin_aux
+  tx_pin: ${tx_pin_aux}
+  rx_pin: ${rx_pin_aux}
   baud_rate: 4800
   data_bits: 8
   parity: EVEN
@@ -51,24 +51,24 @@ climate:
     display_inverted: false
     timeout: 300
     optimistic: true
-    indoor_ambient_temperature:
+    indoor_temperature:
       name: AC Indoor Temperature
       id: ac_indoor_temp
       accuracy_decimals: 1
       internal: false
-    outdoor_ambient_temperature:
+    outdoor_temperature:
       name: AC Outdoor Temperature
       id: ac_outdoor_temp
       internal: false
-    compressor_suction_temperature:
+    compressor_temperature:
       name: AC Coolant Outbound Temperature
       id: ac_outbound_temp
       internal: false
-    indoor_coil_temperature:
+    indoor_temperature:
       name: AC Coolant Inbound Temperature
       id: ac_inbound_temp
       internal: false
-    compressor_discharge_temperature:
+    compressor_temperature:
       name: AC Compressor Temperature
       id: ac_strange_temp
       internal: false
