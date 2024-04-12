@@ -1,9 +1,9 @@
 
 defaults:
   lower_underscored_name: "ac_name_num"
-  display_name: "AC Name Number"
-  tx_pin_aux: GPIO3
-  rx_pin_aux: GPIO1
+  upper_devicename: "AC Name Number"
+  tx_pin_aux: "GPIO3"
+  rx_pin_aux: "GPIO1"
 
 debug:
 
