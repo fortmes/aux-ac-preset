@@ -21,7 +21,7 @@ text_sensor:
   - platform: debug
     device:
       name: "Device Info"
-   reset_reason:
+    reset_reason:
       name: "Reset Reason"
 
 # # UART0 configuration for AUX air conditioner communication
